@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+<body>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script>
+    function show() {
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8080/cinema/hall',
+            dataType: 'text'
+        }).done(function (data) {
+            var mas = JSON.parse(data);
+            // var result = "<tr>" +
+            //     "<th>1</th>" +
+            //     "<td><input type='radio' name='place' value= '11'>Ряд " + mas[0].row + ", Место " + mas[0].column + " isOccupied-" + mas[0].active + "</td>" +
+            //     "<td><input type='radio' name='place' value= '12'>Ряд " + mas[3].row + ", Место " + mas[3].column + " isOccupied-" + mas[3].active + "</td>" +
+            //     "<td><input type='radio' name='place' value= '13'>Ряд " + mas[6].row + ", Место " + mas[6].column + " isOccupied-" + mas[6].active + "</td>" +
+            //     "</tr>" +
+            //     "<tr>" +
+            //     "<th>2</th>" +
+            //     "<td><input type='radio' name='place' value= '21'>Ряд " + mas[1].row + ", Место " + mas[1].column + " isOccupied-" + mas[1].active + "</td>" +
+            //     "<td><input type='radio' name='place' value= '22'>Ряд " + mas[4].row + ", Место " + mas[4].column + " isOccupied-" + mas[4].active + "</td>" +
+            //     "<td><input type='radio' name='place' value= '23'>Ряд " + mas[7].row + ", Место " + mas[7].column + " isOccupied-" + mas[7].active + "</td>" +
+            //     "</tr>" +
+            //     "<th>3</th>" +
+            //     "<td><input type='radio' name='place' value= '31'>Ряд " + mas[2].row + ", Место " + mas[2].column + " isOccupied-" + mas[2].active + "</td>" +
+            //     "<td><input type='radio' name='place' value= '32'>Ряд " + mas[5].row + ", Место " + mas[5].column + " isOccupied-" + mas[5].active + "</td>" +
+            //     "<td><input type='radio' name='place' value= '33'>Ряд " + mas[8].row + ", Место " + mas[8].column + " isOccupied-" + mas[8].active + "</td>" +
+            //     "</tr>";
+            var cell1 = "";
+            var cell2 = "";
+            var cell3 = "";
+            var result = "";
+            for (var i = 0; i < mas.length; i++) {
+                if (mas[i].row == 1) {
+                    cell1 += "<td>" +
+                        "<input type='radio' name='place' value=" + mas[i].row + mas[i].column + ">" +
+                        " Ряд " + mas[i].row + ", Место " + mas[i].column + "  isOccupied-" + mas[i].active +
+                        "</td>";
+                }
+            }
+            result += "<tr>" +
+                "<th>" + 1 + "</th>" +
+                cell1 +
+                "</tr>";
+            for (var i = 0; i < mas.length; i++) {
+                if (mas[i].row == 2) {
+                    cell2 += "<td>" +
+                        "<input type='radio' name='place' value=" + mas[i].row + mas[i].column + ">" +
+                        " Ряд " + mas[i].row + ", Место " + mas[i].column + "  isOccupied-" + mas[i].active +
+                        "</td>";
+                }
+            }
+            result += "<tr>" +
+                "<th>" + 2 + "</th>" +
+                cell2 +
+                "</tr>";
+            for (var i = 0; i < mas.length; i++) {
+                if (mas[i].row == 3) {
+                    cell3 += "<td>" +
+                        "<input type='radio' name='place' value=" + mas[i].row + mas[i].column + ">" +
+                        " Ряд " + mas[i].row + ", Место " + mas[i].column + "  isOccupied-" + mas[i].active +
+                        "</td>";
+                }
+            }
+            result += "<tr>" +
+                "<th>" + 3 + "</th>" +
+                cell3 +
+                "</tr>";
+            var body = document.getElementById("body");
+            body.innerHTML = result;
+        }).fail(function (err) {
+            alert(err);
+        });
+    }
+
+    $(document).ready(function () {
+        show();
+        setInterval('show()', 10000);
+    });
+
+    function pay() {
+        var place = $('input[name="place"]:checked').val();
+        localStorage.setItem('place', place);
+        window.location.href = 'http://localhost:8080/cinema/payment.html';
+    }
+</script>
+<div class="container">
+    <div class="row pt-3">
+        <h4>
+            Бронирование месте на сеанс
+        </h4>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 120px;">Ряд / Место</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+            </tr>
+            </thead>
+            <tbody id="body">
+            </tbody>
+        </table>
+    </div>
+    <div class="row float-right">
+        <button type="button" class="btn btn-success" onclick="pay()">Оплатить</button>
+    </div>
+</div>
+</body>
+</html>
