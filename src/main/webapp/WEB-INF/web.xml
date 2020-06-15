@@ -12,12 +12,4 @@
         <servlet-name>Hall servlet</servlet-name>
         <url-pattern>/hall</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>Pay servlet</servlet-name>
-        <servlet-class>ru.job4j.controller.PayServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Pay servlet</servlet-name>
-        <url-pattern>/pay</url-pattern>
-    </servlet-mapping>
 </web-app>

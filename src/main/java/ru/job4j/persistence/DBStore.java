@@ -1,4 +1,4 @@
-package ru.job4j.Persistence;
+package ru.job4j.persistence;
 
 
 import java.io.BufferedReader;
@@ -26,7 +26,7 @@ public class DBStore implements Store {
         private static final Store INST = new DBStore();
     }
 
-    public static Store INST() {
+    public static Store inst() {
         return Lazy.INST;
     }
 
@@ -58,7 +58,8 @@ public class DBStore implements Store {
     public void createTable() {
         String sql = "";
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("C:\\projects\\cinema\\db\\Schema.sql"));
+            BufferedReader reader = new BufferedReader(
+                    new FileReader("C:\\projects\\cinema\\db\\Schema.sql"));
             int c;
             while ((c = reader.read()) != -1) {
                 sql += (char) c;
@@ -74,7 +75,9 @@ public class DBStore implements Store {
     }
 
     private void addPlaceToHall(Place place) {
-        try (PreparedStatement ps = con.prepareStatement("insert into hall(rows, columns, is_active) values (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = con.prepareStatement(
+                "insert into hall(rows, columns, is_active) values (?, ?, ?)",
+                PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, place.getRow());
             ps.setInt(2, place.getColumn());
             ps.setBoolean(3, place.isActive());
@@ -122,11 +125,13 @@ public class DBStore implements Store {
     }
 
     @Override
-    public void changeStatusPlace(int row, int column, boolean is_activeNew) {
+    public void changeStatusPlace(int row, int column, boolean isActiveNew, int idAccount) {
         connectDb();
-        try (PreparedStatement ps = con.prepareStatement("update hall set is_active = ? where rows =" + row + " and columns =" + column + "")) {
-            ps.setBoolean(1, is_activeNew);
-
+        try (PreparedStatement ps = con.prepareStatement(
+                "update hall set is_active = ?, id_account = ? where rows ="
+                        + row + " and columns =" + column + "")) {
+            ps.setBoolean(1, isActiveNew);
+            ps.setInt(2, idAccount);
             ps.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -138,7 +143,9 @@ public class DBStore implements Store {
     @Override
     public void addNewAccount(String name, int phone) {
         connectDb();
-        try (PreparedStatement ps = con.prepareStatement("insert into account(fio, phonenumber) values (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = con.prepareStatement(
+                "insert into account(fio, phonenumber) values (?, ?)",
+                PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, name);
             ps.setInt(2, phone);
             ps.execute();
@@ -147,5 +154,23 @@ public class DBStore implements Store {
         } finally {
             disconnectedDb();
         }
+    }
+
+    @Override
+    public int getIdAccount(String phoneNumber) {
+        connectDb();
+        int result = 0;
+        try (PreparedStatement ps = con.prepareStatement(
+                "select * from account where phonenumber =" + phoneNumber + "")) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                result = rs.getInt("id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            disconnectedDb();
+        }
+        return result;
     }
 }
