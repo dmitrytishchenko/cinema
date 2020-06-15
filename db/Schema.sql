@@ -1,9 +1,12 @@
 create table if not exists account
 (id serial primary key,
- FIO text,
- phoneNumber integer);
+ fio text,
+ phoneNumber integer,
+ unique (phonenumber));
 create table if not exists hall
 (id serial primary key,
  rows integer ,
  columns integer,
- is_active boolean);
+ is_active boolean,
+ id_account integer,
+ foreign key (id_account) references account(id));
