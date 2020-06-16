@@ -1,11 +1,10 @@
 package ru.job4j.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.job4j.persistence.DBStore;
-import ru.job4j.persistence.Place;
-import ru.job4j.persistence.Store;
+import ru.job4j.Persistence.DBStore;
+import ru.job4j.Persistence.Place;
+import ru.job4j.Persistence.Store;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +14,7 @@ import java.util.List;
 
 public class HallServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
         Store st = DBStore.inst();
@@ -28,7 +27,7 @@ public class HallServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Store st = DBStore.inst();
         String name = req.getParameter("username");
         String phone = req.getParameter("phone");

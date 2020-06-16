@@ -1,5 +1,4 @@
-package ru.job4j.persistence;
-
+package ru.job4j.Persistence;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -126,18 +125,37 @@ public class DBStore implements Store {
 
     @Override
     public void changeStatusPlace(int row, int column, boolean isActiveNew, int idAccount) {
+        if (checkStatusPlace(row, column) != isActiveNew) {
+            connectDb();
+            try (PreparedStatement ps = con.prepareStatement(
+                    "update hall set is_active = ?, id_account = ? where rows ="
+                            + row + " and columns =" + column + "")) {
+                ps.setBoolean(1, isActiveNew);
+                ps.setInt(2, idAccount);
+                ps.execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                disconnectedDb();
+            }
+        } else {
+            throw new IllegalStateException("The place is occupied");
+        }
+    }
+
+    private boolean checkStatusPlace(int row, int column) {
+        boolean result = false;
         connectDb();
         try (PreparedStatement ps = con.prepareStatement(
-                "update hall set is_active = ?, id_account = ? where rows ="
-                        + row + " and columns =" + column + "")) {
-            ps.setBoolean(1, isActiveNew);
-            ps.setInt(2, idAccount);
-            ps.execute();
+                "select is_active from hall where rows =" + row + "and columns =" + column + "")) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                result = rs.getBoolean("is_active");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            disconnectedDb();
         }
+        return result;
     }
 
     @Override

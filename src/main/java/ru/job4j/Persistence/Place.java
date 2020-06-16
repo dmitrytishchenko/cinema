@@ -1,4 +1,4 @@
-package ru.job4j.persistence;
+package ru.job4j.Persistence;
 
 import java.util.Objects;
 

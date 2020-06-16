@@ -1,8 +1,9 @@
-package ru.job4j.persistence;
+package ru.job4j.Persistence;
 
 import java.util.List;
 
 public interface Store {
+
     List<Place> getAllPlaces();
 
     void createTable();
