@@ -14,7 +14,7 @@ public interface Store {
 
     void disconnectedDb();
 
-    void changeStatusPlace(int row, int column, boolean isActiveNew, int idAccount);
+    void changeStatusPlace(int row, int column, int isActiveNew, int idAccount);
 
     void addNewAccount(String name, int phone);
 

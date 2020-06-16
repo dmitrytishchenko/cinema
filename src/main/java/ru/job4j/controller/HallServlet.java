@@ -35,7 +35,7 @@ public class HallServlet extends HttpServlet {
         String place = req.getParameter("place");
         String[] mas = place.split("");
         int idAccount = st.getIdAccount(phone);
-        st.changeStatusPlace(Integer.valueOf(mas[0]), Integer.valueOf(mas[1]), true, idAccount);
+        st.changeStatusPlace(Integer.valueOf(mas[0]), Integer.valueOf(mas[1]), 1, idAccount);
         resp.sendRedirect("/cinema/index.html");
     }
 }

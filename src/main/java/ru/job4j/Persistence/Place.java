@@ -5,13 +5,14 @@ import java.util.Objects;
 public class Place {
     private int row;
     private int column;
-    private boolean isActive;
+    private int isActive;
     private int idAccount;
 
-    public Place(int row, int column, boolean isActive) {
+    public Place(int row, int column, int isActive, int idAccount) {
         this.row = row;
         this.column = column;
         this.isActive = isActive;
+        this.idAccount = idAccount;
     }
 
     public int getRow() {
@@ -30,11 +31,11 @@ public class Place {
         this.column = column;
     }
 
-    public boolean isActive() {
+    public int isActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(int active) {
         isActive = active;
     }
 
