@@ -18,7 +18,8 @@ public class HallServlet extends HttpServlet {
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
         Store st = DBStore.inst();
-        List<Place> places = st.getAllPlaces();
+        Store st2 = DBStore.inst();
+        List<Place> places = st2.getAllPlaces();
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(places);
         PrintWriter writer = new PrintWriter(resp.getOutputStream());
