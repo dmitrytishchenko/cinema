@@ -8,11 +8,10 @@ public class Place {
     private int isActive;
     private int idAccount;
 
-    public Place(int row, int column, int isActive, int idAccount) {
+    public Place(int row, int column, int isActive) {
         this.row = row;
         this.column = column;
         this.isActive = isActive;
-        this.idAccount = idAccount;
     }
 
     public int getRow() {

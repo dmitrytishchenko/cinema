@@ -32,7 +32,9 @@
             url: 'http://localhost:8080/cinema/hall',
             dataType: 'text'
         }).done(function (data) {
+            console.log(data);
             var mas = JSON.parse(data);
+            console.log(mas);
             // var result = "<tr>" +
             //     "<th>1</th>" +
             //     "<td><input type='radio' name='place' value= '11'>Ряд " + mas[0].row + ", Место " + mas[0].column + " isOccupied-" + mas[0].active + "</td>" +
@@ -70,7 +72,7 @@
                 if (mas[i].row == 2) {
                     cell2 += "<td>" +
                         "<input type='radio' name='place' value=" + mas[i].row + mas[i].column + ">" +
-                        " Ряд " + mas[i].row + ", Место " + mas[i].column + "  isOccupied-" + mas[i].idAccount +
+                        " Ряд " + mas[i].row + ", Место " + mas[i].column + "  isOccupied-" + mas[i].action +
                         "</td>";
                 }
             }
@@ -82,7 +84,7 @@
                 if (mas[i].row == 3) {
                     cell3 += "<td>" +
                         "<input type='radio' name='place' value=" + mas[i].row + mas[i].column + ">" +
-                        " Ряд " + mas[i].row + ", Место " + mas[i].column + "  isOccupied-" + mas[i].idAccount +
+                        " Ряд " + mas[i].row + ", Место " + mas[i].column + "  isOccupied-" + mas[i].action +
                         "</td>";
                 }
             }

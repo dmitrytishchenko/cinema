@@ -94,7 +94,7 @@ public class DBStore implements Store {
             } else {
                 for (int i = 1; i <= columns; i++) {
                     for (int j = 1; j <= rows; j++) {
-                        addPlaceToHall(new Place(j, i, 0, 0));
+                        addPlaceToHall(new Place(j, i, 0));
                     }
                 }
             }
@@ -107,14 +107,13 @@ public class DBStore implements Store {
     public List<Place> getAllPlaces() {
         connectDb();
         List<Place> places = new ArrayList<>();
-        try (PreparedStatement ps = con.prepareStatement("select * from hall")) {
+        try (PreparedStatement ps = con.prepareStatement("select rows, columns, is_active from hall")) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 places.add(new Place(
                         rs.getInt("rows"),
                         rs.getInt("columns"),
-                        rs.getInt("is_active"),
-                        rs.getInt("id_account")));
+                        rs.getInt("is_active")));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,37 +125,18 @@ public class DBStore implements Store {
 
     @Override
     public void changeStatusPlace(int row, int column, int isActiveNew, int idAccount) {
-        if (checkStatusPlace(row, column) != isActiveNew) {
-            connectDb();
-            try (PreparedStatement ps = con.prepareStatement(
-                    "update hall set is_active = ?, id_account = ? where rows ="
-                            + row + " and columns =" + column + "")) {
-                ps.setInt(1, isActiveNew);
-                ps.setInt(2, idAccount);
-                ps.execute();
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                disconnectedDb();
-            }
-        } else {
-            throw new IllegalStateException("The place is occupied");
-        }
-    }
-
-    private int checkStatusPlace(int row, int column) {
-        int result = 0;
         connectDb();
         try (PreparedStatement ps = con.prepareStatement(
-                "select is_active from hall where rows =" + row + "and columns =" + column + "")) {
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                result = rs.getInt("is_active");
-            }
+                "update hall set is_active = ?, id_account = ? where rows ="
+                        + row + " and columns =" + column + "")) {
+            ps.setInt(1, isActiveNew);
+            ps.setInt(2, idAccount);
+            ps.execute();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            disconnectedDb();
         }
-        return result;
     }
 
     @Override

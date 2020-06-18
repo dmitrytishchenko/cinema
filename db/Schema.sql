@@ -4,10 +4,11 @@ create table if not exists account
  phoneNumber integer,
  unique (phonenumber));
 create table if not exists hall
-(id serial primary key,
+(id serial,
  rows integer ,
  columns integer,
  is_active integer,
  id_account integer,
- check (is_active <= 1),
+ primary key (id, rows, columns),
  foreign key (id_account) references account(id));
+
