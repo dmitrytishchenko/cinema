@@ -16,7 +16,7 @@ public interface Store {
 
     void changeStatusPlace(int row, int column, int isActiveNew, int idAccount);
 
-    void addNewAccount(String name, int phone);
+    void addNewAccount(String name, String phone);
 
     int getIdAccount(String name);
 }

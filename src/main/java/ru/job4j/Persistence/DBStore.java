@@ -140,13 +140,13 @@ public class DBStore implements Store {
     }
 
     @Override
-    public void addNewAccount(String name, int phone) {
+    public void addNewAccount(String name, String phone) {
         connectDb();
         try (PreparedStatement ps = con.prepareStatement(
                 "insert into account(fio, phonenumber) values (?, ?)",
                 PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, name);
-            ps.setInt(2, phone);
+            ps.setString(2, phone);
             ps.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -160,7 +160,7 @@ public class DBStore implements Store {
         connectDb();
         int result = 0;
         try (PreparedStatement ps = con.prepareStatement(
-                "select * from account where phonenumber =" + phoneNumber + "")) {
+                "select * from account where phonenumber ='" + phoneNumber + "'")) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 result = rs.getInt("id");

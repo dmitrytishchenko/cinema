@@ -31,7 +31,7 @@ public class HallServlet extends HttpServlet {
         Store st = DBStore.inst();
         String name = req.getParameter("username");
         String phone = req.getParameter("phone");
-        st.addNewAccount(name, Integer.valueOf(phone));
+        st.addNewAccount(name, phone);
         String place = req.getParameter("place");
         String[] mas = place.split("");
         int idAccount = st.getIdAccount(phone);

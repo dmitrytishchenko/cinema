@@ -1,7 +1,7 @@
 create table if not exists account
 (id serial primary key,
  fio text,
- phoneNumber integer,
+ phoneNumber varchar (20),
  unique (phonenumber));
 create table if not exists hall
 (id serial,

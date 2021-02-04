@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Hello, dear guest in our cinema!</title>
 </head>
 <body>
 <!-- Optional JavaScript -->
@@ -24,7 +24,7 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
+<h1 style="text-align: center" >Welcome to our cinema</h1>
 <script>
     function show() {
         $.ajax({
@@ -39,10 +39,13 @@
             var result = "";
             for (var i = 0; i < mas.length; i++) {
                 if (mas[i].row == 1) {
-                    cell1 += "<td>" +
-                        "<input type='radio' name='place' value=" + mas[i].row + mas[i].column + ">" +
-                        " Ряд " + mas[i].row + ", Место " + mas[i].column + "  isOccupied-" + mas[i].idAccount +
-                        "</td>";
+                    for (let j = 0; j < mas[i].column; j++) {
+
+                        cell1 += "<td>" +
+                            "<input type='radio' name='place' value=" + mas[i].row + mas[i].column + ">" +
+                            " Ряд " + mas[i].row + ", Место " + mas[i].column + "  isOccupied-" + mas[i].idAccount +
+                            "</td>";
+                    }
                 }
             }
             result += "<tr>" +
@@ -82,7 +85,7 @@
 
     $(document).ready(function () {
         show();
-        setInterval('show()', 10000);
+        // setInterval('show()', 10000);
     });
 
     function pay() {
